@@ -97,6 +97,8 @@ elevation(roadPath);
 let box = document.querySelector("#box");
 let container = document.querySelector(".container");
 
+
+
 window.addEventListener("load", () => {
   container.style.position = "relative";
   box.style.position = "absolute";
@@ -121,23 +123,21 @@ let timer = -50;
 
 function rain(arr) {
   const rainElem = document.createElement("div");
-  const rainElPos = rainElem.getBoundingClientRect();
-
   rainElem.classList.add("rain");
-
+  
   container.append(rainElem);
   rainElem.innerHTML = arr[val];
   
   let timeout = setInterval(() => {
+    const rainElPos = rainElem.getBoundingClientRect();
     rainElem.style.left = Math.floor(Math.random() * 300) + "px";
     rainElem.style.top = `${(timer += 5)}` + "px";
-
-    console.log(rainElPos);
     if (timer > 300) {
       timer = 0;
       clearInterval(timeout);
     }
   }, 200);
+
 
 }
 
@@ -150,7 +150,7 @@ rain(list);
 
 const move = 7;
 
-
+const findRainElem = document.querySelector('.rain')
 
 
 function buttons(e) {
@@ -164,9 +164,15 @@ function buttons(e) {
   const boxDifPos = box.getBoundingClientRect();
 
 
-
-
+  const rainElemPos =  findRainElem.getBoundingClientRect()
   containerController(containerPosition, boxDifPos);
+  console.log(
+    parseInt(rainElemPos.x),
+    parseInt(boxDifPos.x) 
+  );
+  if(parseInt(boxDifPos.x)  === parseInt(rainElemPos.x) || parseInt(rainElemPos.y) === parseInt(boxDifPos.y) ) {
+    return alert('congrats')
+  }
 
 
   switch (e.key) {
